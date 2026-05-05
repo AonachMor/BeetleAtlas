@@ -1,0 +1,18 @@
+// uniTissues.txt - Input file for BeetleAtlas (read by TissueCatalogue class) updated 03.01.2025
+
+// DisplayPosition	 UniTissueID	Description
+
+1	1001	% Head
+2	1003	% Brain
+3	1005	% Anterior Midgut
+4	1007	% Posterior Midgut
+5	1009	% Hindgut
+6	1011	% Tubule
+7	1021	% Perirectal Tubules
+9	1022	% Rectum
+8	1013	% Rectal complex
+10	1015	% Fat Body
+11	1017	% Male Gonads
+12	1018	% Female Gonads
+13	1019	% Carcass
+20	1020	% WholeBody — must be 20. Terrible coding — must fix!
