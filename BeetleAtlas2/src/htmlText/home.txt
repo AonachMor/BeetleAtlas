@@ -1,0 +1,40 @@
+<div class="intro"><!-- external text starts here -->
+
+<p class="home">
+This is the ‘<span style="color:black; font-weight:500;">NCBI</span>’ mode of <span style="color:black; font-weight:500;">BeetleAtlas 2</span> — the resource for tissue-specific transcriptomics in <em>Tribolium castaneum</em>. Use it for work on beetle genes with numeric NCBI IDs. 
+<br>Queries of the following types are available from the menu above:
+</p>
+
+<ul class="home">
+<li><a href="javascript:toGeneForm();">GENE</a>: For a particular gene, find details of its expression in different tissues or in embryos.</li>
+<li><a href="javascript:toTopForm();">TISSUE</a>: For a given tissue, find the most highly expressed genes.</li>
+<li><a href="javascript:toGOForm();">CATEGORY</a>: For a given tissue, find expressed genes in certain descriptive categories.</li>
+<li><a href="javascript:toDevelForm();">ADULT/LARVA</a>: For a given tissue, find genes with different expression in larva and adult.</li>
+<li><a href="javascript:toEmbryoForm();">EMBRYO</a>: Find genes expressed at different stages of embryonic development.</li>
+<li><a href="javascript:toProfileForm();">PROFILE</a>: Find genes with a pattern of expression similar to a gene of interest.</li>
+</ul>
+
+<p class="home mobileHide">In addition you can:</p>
+
+<ul class="home mobileHide">
+	<li>
+		Compare the results with those for any equivalent OGS3 gene.
+	</li>
+	<li>
+		Examine the raw RNA-seq reads on the icTriCast1.1 genome assembly in the UCSC Genome Browser alongside both NCBI and OSG3 gene models.		
+	</li>
+</ul>
+
+<p class="home mobileHide">…and</p>
+
+<ul class="home mobileHide">
+	<li>
+		OGS3 mode (for IDs with ‘TC’ prefixes) is always available from the switch button <a href="https://motif.mvls.gla.ac.uk/BeetleAtlas/index.html"><button class="switchButton" style="font-size:75%;">&#8634;</button></a>
+	</li>
+</ul>
+
+<p class="home">
+You can find further information in the <a href="javascript:toHelpForm();">Docs</a> or the <a href="javascript:openLinkWindow('https://motif.mvls.gla.ac.uk/downloads/BeetleAtlas2Manual.pdf');">Manual</a>, and a <a href="javascript:openLinkWindow('https://doi.org/10.1016/j.jmb.2024.168520');">paper</a> describing the original Beetle Atlas is also available.
+</p>
+
+</div><!-- end of external text-->
