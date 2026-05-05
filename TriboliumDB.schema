@@ -1,0 +1,227 @@
+-- MySQL dump 10.13  Distrib 5.7.25, for macos10.14 (x86_64)
+--
+-- Host: localhost    Database: TriboliumDB
+-- ------------------------------------------------------
+-- Server version	5.7.25
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `EmbyroPeakFPKM`
+--
+
+DROP TABLE IF EXISTS `EmbyroPeakFPKM`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `EmbyroPeakFPKM` (
+  `GeneID` char(8) NOT NULL,
+  `Age` varchar(10) NOT NULL,
+  `FPKM` double(8,2) NOT NULL,
+  PRIMARY KEY (`GeneID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `FlyCorrelate`
+--
+
+DROP TABLE IF EXISTS `FlyCorrelate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `FlyCorrelate` (
+  `GeneID` char(8) NOT NULL,
+  `FBgn` char(11) NOT NULL,
+  `CGNum` varchar(10) NOT NULL,
+  `FlySymbol` varchar(40) NOT NULL,
+  PRIMARY KEY (`GeneID`,`FBgn`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Gene`
+--
+
+DROP TABLE IF EXISTS `Gene`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Gene` (
+  `GeneID` char(8) NOT NULL,
+  `Symbol` varchar(20) DEFAULT NULL,
+  `NCBI_ID` varchar(10) DEFAULT NULL,
+  `LocusTcas52` varchar(40) NOT NULL,
+  `Locus` varchar(40) DEFAULT NULL,
+  `Product` varchar(150) DEFAULT NULL,
+  `Ortho` enum('Yes','No') DEFAULT NULL,
+  `Para` enum('Yes','No') DEFAULT NULL,
+  PRIMARY KEY (`GeneID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `GeneFPKM`
+--
+
+DROP TABLE IF EXISTS `GeneFPKM`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `GeneFPKM` (
+  `GeneID` char(8) NOT NULL,
+  `TissueID` int(3) NOT NULL,
+  `FPKM` double(8,2) NOT NULL,
+  `Replicate1` double(8,2) NOT NULL,
+  `Replicate2` double(8,2) DEFAULT NULL,
+  `Replicate3` double(8,2) DEFAULT NULL,
+  `SD` double(8,2) DEFAULT NULL,
+  `Status` enum('OK','LOWDATA','HIDATA','FAIL') NOT NULL,
+  PRIMARY KEY (`GeneID`,`TissueID`),
+  KEY `TissueID` (`TissueID`),
+  CONSTRAINT `genefpkm_ibfk_1` FOREIGN KEY (`GeneID`) REFERENCES `Gene` (`GeneID`),
+  CONSTRAINT `genefpkm_ibfk_2` FOREIGN KEY (`TissueID`) REFERENCES `Tissue` (`TissueID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `GeneKeyword`
+--
+
+DROP TABLE IF EXISTS `GeneKeyword`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `GeneKeyword` (
+  `GeneID` char(8) NOT NULL,
+  `Keyword` varchar(40) NOT NULL,
+  PRIMARY KEY (`GeneID`,`Keyword`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `NCBI`
+--
+
+DROP TABLE IF EXISTS `NCBI`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `NCBI` (
+  `NCBI_ID` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ParaOld`
+--
+
+DROP TABLE IF EXISTS `ParaOld`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ParaOld` (
+  `GeneID` char(8) NOT NULL,
+  `ParaID` char(8) NOT NULL,
+  PRIMARY KEY (`GeneID`,`ParaID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Paralogue`
+--
+
+DROP TABLE IF EXISTS `Paralogue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Paralogue` (
+  `GeneID` char(8) NOT NULL,
+  `ParaID` char(8) NOT NULL,
+  PRIMARY KEY (`GeneID`,`ParaID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Tissue`
+--
+
+DROP TABLE IF EXISTS `Tissue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Tissue` (
+  `TissueID` int(3) NOT NULL,
+  `Stage` enum('Adult','Larval','Embryo') NOT NULL,
+  `Age` varchar(10) DEFAULT NULL,
+  `Sex` enum('Male','Female','Both') NOT NULL,
+  `TissueName` varchar(30) NOT NULL,
+  `Abbreviation` char(2) NOT NULL,
+  `UniTissueID` int(4) NOT NULL,
+  `Reference` enum('Yes','No') NOT NULL,
+  `Replicates` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`TissueID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Transcript`
+--
+
+DROP TABLE IF EXISTS `Transcript`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Transcript` (
+  `TranscriptID` char(11) NOT NULL,
+  `GeneID` char(8) NOT NULL,
+  PRIMARY KEY (`TranscriptID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `TranscriptFPKM`
+--
+
+DROP TABLE IF EXISTS `TranscriptFPKM`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TranscriptFPKM` (
+  `TranscriptID` char(11) NOT NULL,
+  `TissueID` int(3) NOT NULL,
+  `FPKM` double(8,2) NOT NULL,
+  `Replicate1` double(8,2) NOT NULL,
+  `Replicate2` double(8,2) DEFAULT NULL,
+  `Replicate3` double(8,2) DEFAULT NULL,
+  `SD` double(8,2) DEFAULT NULL,
+  `Status` enum('OK','LOWDATA','HIDATA','FAIL') NOT NULL,
+  PRIMARY KEY (`TranscriptID`,`TissueID`),
+  KEY `TissueID` (`TissueID`),
+  CONSTRAINT `transcriptfpkm_ibfk_1` FOREIGN KEY (`TranscriptID`) REFERENCES `Transcript` (`TranscriptID`),
+  CONSTRAINT `transcriptfpkm_ibfk_2` FOREIGN KEY (`TissueID`) REFERENCES `Tissue` (`TissueID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `UniTissue`
+--
+
+DROP TABLE IF EXISTS `UniTissue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `UniTissue` (
+  `UniTissueID` int(2) NOT NULL,
+  `UniTissueName` varchar(30) NOT NULL,
+  PRIMARY KEY (`UniTissueID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-05-05 21:49:22
